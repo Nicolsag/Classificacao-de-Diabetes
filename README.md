@@ -1,1 +1,1 @@
-# Classifica-o-de-Diabetes
+# Classificacao-de-Diabetes
