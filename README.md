@@ -1,79 +1,103 @@
-Detecção de Diabetes com Machine Learning
-Objetivo
+#  Detecção de Diabetes com Machine Learning
 
-Desenvolver um modelo para identificar casos de dengue com base em dados clínicos, priorizando a redução de falsos negativos.
-Abordagem
+##  Objetivo
 
-    Modelos testados: LogisticRegression, RandomForestClassifier, KNeighborsClassifier, LGBMClassifier, XGBClassifier;
-    Otimização com Optuna;
-    Curva Roc e Matrix de Confusão para visualizaçao do problema.
+Desenvolver um modelo de Machine Learning capaz de identificar a presença de diabetes com base em dados clínicos e comportamentais, com foco na **redução de falsos negativos**, priorizando a detecção correta de pacientes doentes.
 
-Resultados AUC
+---
 
-    LogisticRegression: 0.81;
-    RandomForestClassifier: 0.81;
-    KNeighborsClassifier: 0.76;
-    LGBMClassifier: 0.79;
-    XGBClassifier: 0.79.
+## 🔍 Abordagem
 
-Tecnologias
+Foram avaliados diferentes algoritmos de classificação supervisionada:
 
-    Python: Linguagem de programação base;
+- Logistic Regression  
+- Random Forest Classifier  
+- K-Nearest Neighbors (KNN)  
+- LightGBM  
+- XGBoost  
 
-NumPy: Responsável pela computação numérica e manipulação de tensores e arrays multidimensionais. É o motor de execução utilizado internamente pelo Scikit-learn e XGBoost para realizar os cálculos matemáticos dos algoritmos;
+A otimização de hiperparâmetros foi realizada utilizando **Optuna**, com abordagem bayesiana (*Tree-structured Parzen Estimator - TPE*).
 
-Pandas: Utilizada para a ingestão, limpeza e estruturação dos dados em DataFrames. É a ferramenta que permite o particionamento dos dados e a organização tabular necessária antes da entrada no pipeline de pré-processamento;
+A avaliação dos modelos foi baseada em:
 
-Scikit-learn: Biblioteca para modelagem preditiva, métricas de avaliação (Recall, ROC-AUC, Confusion Matrix) e transformações de dados;
+- ROC-AUC  
+- Recall  
+- Matriz de Confusão  
 
-XGBoost: Algoritmo de Gradient Boosting otimizado para eficiência computacional;
+---
 
-LightGBM: Framework de Gradient Boosting baseado em árvores de decisão, focado em performance e memória;
+##  Resultados (ROC-AUC)
 
-Imbalanced-learn: Utilização de ImbPipeline e SMOTE-NC para balanceamento sintético de classes com dados mistos (numéricos e categóricos);
+| Modelo               | ROC-AUC |
+|---------------------|--------|
+| Logistic Regression | 0.81   |
+| Random Forest       | 0.81   |
+| KNN                 | 0.76   |
+| LightGBM            | 0.79   |
+| XGBoost             | 0.79   |
 
-Matplotlib & Seaborn: Bibliotecas para visualização estatística e análise de performance dos modelos;
+---
 
-Optuna: Framework de otimização de hiperparâmetros via Busca Bayesiana (Tree-structured Parzen Estimator);
+##  Interpretação dos Resultados
 
-Joblib: Ferramenta para a serialização e persistência de modelos de Machine Learning, otimizada para manipular grandes arrays NumPy e exportar o classificador para uso em predições futuras.
+Os modelos apresentaram desempenho semelhante, com destaque para:
 
+- **Logistic Regression** e **Random Forest**, que atingiram o melhor desempenho geral;
+- Modelos de boosting (LightGBM e XGBoost) com resultados competitivos.
 
-Link do Google Colab:
+Como o objetivo do projeto é minimizar erros críticos, a análise vai além do ROC-AUC, considerando principalmente a capacidade do modelo de identificar corretamente casos positivos.
 
-https://colab.research.google.com/drive/1V5_scElgR9ReoHiPwzVCMTZLINxCaMOh?usp=sharing
-Foi utilizado o dataset de detecção de dengue disponível no Kaggle, contendo dados clínicos e laboratoriais de pacientes:
+---
 
-[https://www.kaggle.com/datasets/aravind3505/dengue-detection-dataset-clinical-data](https://colab.research.google.com/drive/1H69BimJ-gORygj-h97OHO6RHwIHfEh_1#scrollTo=wW3MM3c4U5ns)
-Features
+##  Matriz de Confusão
 
-    Diabetes_012 |  0 = Sem Diabetes, 1 = Pre Diabetes, 2 = Tem Diabetes|
-| HighBP | Pressão alta |
-| HighChol | Colesterol alto |
-| CholCheck | Fez exame de colesterol nos últimos 5 anos |
-| BMI | Índice de Massa Corporal |
-| Smoker | Fumou ≥100 cigarros na vida |
-| Stroke | Já teve AVC |
-| HeartDiseaseorAttack | Doença cardíaca ou infarto |
-| PhysActivity | Atividade física nos últimos 30 dias |
-| Fruits | Consome frutas ≥1x/dia |
-| Veggies | Consome vegetais ≥1x/dia |
-| HvyAlcoholConsump | Consumo elevado de álcool |
-| AnyHealthcare | Possui acesso a plano de saúde |
-| NoDocbcCost | Não foi ao médico por custo |
-| GenHlth | Saúde geral (1–5) |
-| MentHlth | Dias com saúde mental ruim (0–30) |
-| PhysHlth | Dias com saúde física ruim (0–30) |
-| DiffWalk | Dificuldade para andar/subir escadas |
-| Sex | Sexo: 0 = Feminino, 1 = Masculino |
-| Age | Faixa etária (1–13) |
-| Education | Nível educacional (1–6) |
-| Income | Nível de renda (1–8) |
+A matriz de confusão permite avaliar o desempenho do modelo em termos de acertos e erros:
 
-Pré-processamento de dados
+- **Verdadeiros Positivos (TP):** casos de diabetes corretamente identificados  
+- **Falsos Negativos (FN):** casos de diabetes classificados como saudáveis (**erro crítico**)  
+- **Falsos Positivos (FP):** indivíduos saudáveis classificados como doentes  
+- **Verdadeiros Negativos (TN):** indivíduos saudáveis corretamente classificados  
 
-Foram realizadas etapas básicas de limpeza e preparação dos dados:
+Dado o contexto, o modelo ideal deve:
 
-    remoção de valores ausentes
-    remoção de registros duplicados
-    padronização dos nomes das variáveis para manter consistência na análise
+- Maximizar **Recall**
+- Minimizar **Falsos Negativos (FN)**, mesmo com aumento controlado de falsos positivos  
+
+---
+
+##  Tecnologias Utilizadas
+
+- **Python** — linguagem principal  
+- **NumPy** — computação numérica  
+- **Pandas** — manipulação e estruturação de dados  
+- **Scikit-learn** — modelagem e métricas  
+- **XGBoost** — gradient boosting otimizado  
+- **LightGBM** — boosting eficiente em memória e performance  
+- **Imbalanced-learn** — balanceamento com SMOTE-NC  
+- **Matplotlib & Seaborn** — visualização de dados  
+- **Optuna** — otimização de hiperparâmetros  
+- **Joblib** — persistência do modelo  
+
+---
+
+##  Pré-processamento de Dados
+
+- Remoção de valores ausentes  
+- Remoção de registros duplicados  
+- Padronização dos nomes das variáveis  
+
+---
+
+##  Dataset
+
+Dataset utilizado:
+
+- [Dengue Detection Dataset (Kaggle)](https://www.kaggle.com/datasets/aravind3505/dengue-detection-dataset-clinical-data)
+
+> *Obs.: Dataset reaproveitado e adaptado para análise de classificação.*
+
+---
+
+##  Acesso ao Projeto
+
+- [Google Colab](https://colab.research.google.com/drive/1V5_scElgR9ReoHiPwzVCMTZLINxCaMOh?usp=sharing)
