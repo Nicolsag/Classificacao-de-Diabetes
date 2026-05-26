@@ -100,4 +100,4 @@ Dataset utilizado:
 
 ##  Acesso ao Projeto
 
-- [Google Colab](https://colab.research.google.com/drive/1V5_scElgR9ReoHiPwzVCMTZLINxCaMOh?usp=sharing)
+- [Google Colab](https://colab.research.google.com/drive/1H69BimJ-gORygj-h97OHO6RHwIHfEh_1#scrollTo=jDzLBJAW53Og)
