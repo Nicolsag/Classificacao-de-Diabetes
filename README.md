@@ -6,7 +6,7 @@ Desenvolver um modelo de Machine Learning capaz de identificar a presença de di
 
 ---
 
-## 🔍 Abordagem
+##  Abordagem
 
 Foram avaliados diferentes algoritmos de classificação supervisionada:
 
